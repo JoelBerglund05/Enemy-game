@@ -22,16 +22,27 @@ namespace EasyStart
         float speed;
         float walkingAnimationTimer;
         float idleAnimationTimer;
+        float attackAnimationTimer;
+        float attackCooldown;
+
+        private bool isAttacking;
+
         private PlayerState state;
         public Player() {
             speed = 100f;
             this.ScaleSprite = .1f;
             this.ScaleRadius = .1f;
-            walkingAnimationTimer = 0;
+            walkingAnimationTimer = 0f;
+            idleAnimationTimer = 0f;
+            attackAnimationTimer = 0f;
+            attackCooldown = 1f;
+            isAttacking = false;
             string[] imageNames = { "0_Golem_Walking_000", "0_Golem_Walking_023", "0_Golem_Walking_009", 
                 "0_Golem_Idle_000", "0_Golem_Idle_008", "0_Golem_Idle_017", "0_Golem_Idle Blinking_000",
                 "0_Golem_Idle Blinking_003", "0_Golem_Idle Blinking_006", "0_Golem_Idle Blinking_009",
-                "0_Golem_Idle Blinking_012", "0_Golem_Idle Blinking_015", "0_Golem_Idle Blinking_017"};
+                "0_Golem_Idle Blinking_012", "0_Golem_Idle Blinking_015", "0_Golem_Idle Blinking_017",
+                "0_Golem_Run Slashing_000", "0_Golem_Run Slashing_003", "0_Golem_Run Slashing_006",
+                "0_Golem_Run Slashing_007", "0_Golem_Run Slashing_008"};
             GameArt.Add(imageNames);
             this.state = PlayerState.Idle;
         }
@@ -39,6 +50,7 @@ namespace EasyStart
         public override void Update(GameTime gameTime)
         {
             this.Movement(gameTime);
+            this.Atack(gameTime);
 
             this.TurnTowards(Mouse.GetState().X, Mouse.GetState().Y);
 
@@ -76,15 +88,76 @@ namespace EasyStart
             }
         }
 
+        private void Atack(GameTime gameTime)
+        {
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed && attackCooldown >= 0)
+            {
+                this.state = PlayerState.Attacking;
+                attackCooldown =1f;
+                isAttacking = true;
+            }
+            else
+            {
+                attackCooldown -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+        }
+
         private void AnimationManager(GameTime gameTime)
         {
-            if (this.state == PlayerState.Walking)
+            if (this.state == PlayerState.Attacking)
+            {
+                this.AttackAnimation(gameTime);
+                attackAnimationTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            else if (this.state == PlayerState.Walking && !isAttacking)
             {
                 this.Walk(gameTime);
             }
-            else if (this.state == PlayerState.Idle)
+            else if (this.state == PlayerState.Idle && !isAttacking)
             {
                 this.Idle(gameTime);
+            } 
+            else
+            {
+                this.AttackAnimation(gameTime);
+                attackAnimationTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+
+
+        }
+        private void AttackAnimation(GameTime gameTime)
+        {
+            if (attackAnimationTimer <= 0.0f)
+            {
+                this.ImageName = "0_Golem_Run Slashing_000";
+                Image = GameArt.Get(ImageName);
+            }
+            else if (attackAnimationTimer <= 0.2f)
+            {
+                this.ImageName = "0_Golem_Run Slashing_003";
+                Image = GameArt.Get(ImageName);
+            }
+            else if (attackAnimationTimer <= 0.4f)
+            {
+                this.ImageName = "0_Golem_Run Slashing_006";
+                Image = GameArt.Get(ImageName);
+            }
+            else if (attackAnimationTimer <= 0.6f)
+            {
+                this.ImageName = "0_Golem_Run Slashing_007";
+                Image = GameArt.Get(ImageName);
+            }
+            else if (attackAnimationTimer <= 0.8f)
+            {
+                this.ImageName = "0_Golem_Run Slashing_008";
+                Image = GameArt.Get(ImageName);
+            }
+            else if (attackAnimationTimer <= 1.0f)
+            {
+                this.ImageName = "0_Golem_Idle_000";
+                Image = GameArt.Get(ImageName);
+                attackAnimationTimer = 0;
+                isAttacking = false;
             }
         }
 
