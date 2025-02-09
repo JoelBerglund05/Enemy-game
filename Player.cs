@@ -68,6 +68,10 @@ namespace EasyStart
             {
                 this.World.RemoveActor(this);
             }
+            else if (IsTouching(typeof(Melee)))
+            {
+                this.World.RemoveActor(this);
+            }
         }
 
         private void Movement(GameTime gameTime)
@@ -136,7 +140,7 @@ namespace EasyStart
         }
         private void AttackAnimation(GameTime gameTime)
         {
-            Melee slash = new Melee(this);
+            PlayerMelee slash = new PlayerMelee(this);
 
             if (attackAnimationTimer <= 0.0f)
             {
