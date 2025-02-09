@@ -13,7 +13,7 @@ namespace EasyMonoGame
     /// 
     /// An inheriting class must implement the Update method.
     /// </summary>
-    public abstract class Actor
+    public abstract class Actor : IActor
     {
         private Texture2D image;
         private string imageName;
