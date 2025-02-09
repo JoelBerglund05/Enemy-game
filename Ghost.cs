@@ -18,7 +18,7 @@ namespace EasyStart
 
         public Ghost(IActor player) : base(player)
         {
-            this.speed = 100f;
+            this.speed = 30f;
             
             this.walkAnimationTimer = 0;
             this.attackAnimationTimer = 0;

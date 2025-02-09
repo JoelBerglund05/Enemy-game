@@ -17,7 +17,7 @@ namespace EasyStart
 
         public Satyr(IActor player) : base(player)
         {
-            speed = 50f;
+            speed = 70f;
             walkAnimationTimer = 0;
             attackAnimationTimer = 0;
             attackCooldown = 1.0f;
