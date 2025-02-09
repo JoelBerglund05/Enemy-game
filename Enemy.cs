@@ -30,7 +30,7 @@ namespace EasyStart
 
         protected void IsKilled()
         {
-            if (IsTouching(typeof(Melee)))
+            if (IsTouching(typeof(PlayerMelee)))
             {
                 World.RemoveActor(this);
             }

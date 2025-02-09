@@ -16,7 +16,7 @@ namespace EasyStart
         public Melee(IActor player)
         {
             this.ScaleSprite = 0f;
-            this.ScaleRadius = .2f;
+            this.ScaleRadius = .15f;
             this.duration = 0.6f;
             this.player = player;
         }
