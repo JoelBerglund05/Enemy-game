@@ -16,7 +16,7 @@ namespace EasyStart
         public MyWorld() : base(1000, 1000)
         {
             // Tile background with the file "bluerock" in the Content folder.
-            BackgroundTileName = "bluerock";
+            BackgroundTileName = "FieldsTile_38";
 
             player = new Player();
             Add(player, "0_Golem_Walking_000", this.Width / 2, this.Height / 2);
