@@ -9,10 +9,16 @@ namespace EasyStart
 {
     internal class MyWorld : World
     {
-        public MyWorld() : base(600, 800)
+        private Player player;
+
+        public MyWorld() : base(1000, 1000)
         {
             // Tile background with the file "bluerock" in the Content folder.
             BackgroundTileName = "bluerock";
+
+            player = new Player();
+            Add(player, "man", this.Width / 2, this.Height / 2);
+
         }  
     }
 }
