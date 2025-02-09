@@ -15,7 +15,7 @@ namespace EasyStart
         float speed;
         public Player() {
             speed = 100f;
-            this.ScaleRadius = 4f;
+            this.ScaleRadius = .1f;
         }
 
         public override void Update(GameTime gameTime)
@@ -27,7 +27,6 @@ namespace EasyStart
 
         private void Movement(GameTime gameTime)
         {
-
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
                 this.Y -= (float)Math.Sqrt(speed * gameTime.ElapsedGameTime.TotalSeconds);
@@ -45,7 +44,8 @@ namespace EasyStart
             {
                 this.X -= (float)Math.Sqrt(speed * gameTime.ElapsedGameTime.TotalSeconds);
             }
-           
         }
+
+
     }
 }

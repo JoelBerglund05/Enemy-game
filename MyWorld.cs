@@ -19,7 +19,7 @@ namespace EasyStart
             BackgroundTileName = "bluerock";
 
             player = new Player();
-            Add(player, "man", this.Width / 2, this.Height / 2);
+            Add(player, "0_Golem_Walking_000", this.Width / 2, this.Height / 2);
 
             enemy = new Enemy(player);
             Add(enemy, "polar-bear", this.Width / 3, this.Height / 3);
