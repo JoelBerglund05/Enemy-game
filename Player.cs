@@ -57,17 +57,18 @@ namespace EasyStart
 
             this.TurnTowards(Mouse.GetState().X, Mouse.GetState().Y);
 
-            if (IsTouching(typeof(Enemy)))
-            {
-                World.RemoveActor(this);
-            }
-
             this.AnimationManager(gameTime);
 
-
+            this.IsKilled();
         }
 
-
+        private void IsKilled()
+        {
+            if (IsTouching(typeof(Projectile)))
+            {
+                this.World.RemoveActor(this);
+            }
+        }
 
         private void Movement(GameTime gameTime)
         {
@@ -135,7 +136,7 @@ namespace EasyStart
         }
         private void AttackAnimation(GameTime gameTime)
         {
-            Slash slash = new Slash(this);
+            Melee slash = new Melee(this);
 
             if (attackAnimationTimer <= 0.0f)
             {

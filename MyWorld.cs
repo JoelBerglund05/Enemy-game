@@ -11,7 +11,7 @@ namespace EasyStart
     internal class MyWorld : World
     {
         private Player player;
-        private Enemy enemy;
+        private Ghost enemy;
 
         public MyWorld() : base(1000, 1000)
         {
@@ -21,7 +21,7 @@ namespace EasyStart
             player = new Player();
             Add(player, "0_Golem_Walking_000", this.Width / 2, this.Height / 2);
 
-            enemy = new Enemy(player);
+            enemy = new Ghost(player);
             Add(enemy, "Wraith_01_Moving Forward_000", this.Width / 3, this.Height / 3);
         }
         

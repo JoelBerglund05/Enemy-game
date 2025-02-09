@@ -8,15 +8,15 @@ using Microsoft.Xna.Framework;
 
 namespace EasyStart
 {
-    internal class Slash : Actor
+    internal class Melee : Weapons
     {
         private float duration;
         IActor player;
 
-        public Slash(IActor player)
+        public Melee(IActor player)
         {
-            this.ScaleSprite = .1f;
-            this.ScaleRadius = .1f;
+            this.ScaleSprite = 0f;
+            this.ScaleRadius = .2f;
             this.duration = 0.6f;
             this.player = player;
         }
