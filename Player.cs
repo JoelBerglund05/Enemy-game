@@ -15,6 +15,7 @@ namespace EasyStart
         float speed;
         public Player() {
             speed = 100f;
+            this.ScaleSprite = .1f;
             this.ScaleRadius = .1f;
         }
 
