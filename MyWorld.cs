@@ -22,7 +22,7 @@ namespace EasyStart
             Add(player, "0_Golem_Walking_000", this.Width / 2, this.Height / 2);
 
             enemy = new Enemy(player);
-            Add(enemy, "polar-bear", this.Width / 3, this.Height / 3);
+            Add(enemy, "Wraith_01_Moving Forward_000", this.Width / 3, this.Height / 3);
         }
         
     }
