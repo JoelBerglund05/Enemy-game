@@ -24,6 +24,7 @@ namespace EasyMonoGame
         private World world;
         private bool isFlippedHorizontally = false;
         private float scaleRadius = 1.0f;
+        private float scaleSprite = 1.0f;
 
         /// <summary>
         /// Get the world this actor lives in.
@@ -116,6 +117,18 @@ namespace EasyMonoGame
             set { scaleRadius = value; }
         }
         /// <summary>
+        /// Scale the sprite. 
+        /// 
+        /// Example:
+        /// 0.9f makes it 90% of the original size.
+        /// 1.1f makes it 110% of the original size.
+        /// </summary>
+        public float ScaleSprite
+        {
+            get { return scaleSprite; }
+            set { scaleSprite = value; }
+        }
+        /// <summary>
         /// Set or get the rotation of this actor.
         /// </summary>
         public float Rotation
@@ -186,7 +199,7 @@ namespace EasyMonoGame
                 Color.White,
                 rotation * MathF.PI / 180f, // Convert to radians
                 new Vector2(image.Width / 2, image.Height / 2), // Center image on position
-                Vector2.One,
+                Vector2.One * scaleSprite,
                 spriteEffects,
                 0f);
         }
