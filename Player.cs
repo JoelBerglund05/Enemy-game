@@ -5,6 +5,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using EasyMonoGame;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace EasyStart
@@ -13,40 +14,36 @@ namespace EasyStart
     {
         float speed;
         public Player() {
-            speed = 3f;
+            speed = 100f;
             this.ScaleRadius = 4f;
         }
 
-        public override void Act()
+        public override void Update(GameTime gameTime)
         {
-            Movement();
+            Movement(gameTime);
 
             this.TurnTowards(Mouse.GetState().X, Mouse.GetState().Y);
         }
 
-        private void Movement()
+        private void Movement(GameTime gameTime)
         {
-            Vector2 position = new Vector2();
-            position.X = this.X;
-            position.Y = this.Y;
-            position = Vector2.Normalize(position);
+
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
-                this.Y -= position.Y * speed;
-
+                this.Y -= (float)Math.Sqrt(speed * gameTime.ElapsedGameTime.TotalSeconds);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
-                this.Y += position.Y * speed;
+                this.Y += (float)Math.Sqrt(speed * gameTime.ElapsedGameTime.TotalSeconds);
 
             }
             if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
-                this.X += position.X * speed;
+                this.X += (float)Math.Sqrt(speed * gameTime.ElapsedGameTime.TotalSeconds);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
-                this.X -= position.X * speed;
+                this.X -= (float)Math.Sqrt(speed * gameTime.ElapsedGameTime.TotalSeconds);
             }
            
         }
