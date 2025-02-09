@@ -23,6 +23,11 @@ namespace EasyStart
         {
             this.TurnTowards(this.player.Position.X, this.player.Position.Y);
             this.Move((float)gameTime.ElapsedGameTime.TotalSeconds * speed);
+
+            if (IsTouching(typeof(Slash)))
+            {
+                World.RemoveActor(this);
+            }
         }
     }
 }

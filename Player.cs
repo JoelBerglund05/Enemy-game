@@ -28,10 +28,12 @@ namespace EasyStart
         private bool isAttacking;
 
         private PlayerState state;
+
+
         public Player() {
             speed = 100f;
             this.ScaleSprite = .1f;
-            this.ScaleRadius = .1f;
+            this.ScaleRadius = .05f;
             walkingAnimationTimer = 0f;
             idleAnimationTimer = 0f;
             attackAnimationTimer = 0f;
@@ -45,6 +47,7 @@ namespace EasyStart
                 "0_Golem_Run Slashing_007", "0_Golem_Run Slashing_008"};
             GameArt.Add(imageNames);
             this.state = PlayerState.Idle;
+
         }
 
         public override void Update(GameTime gameTime)
@@ -54,9 +57,17 @@ namespace EasyStart
 
             this.TurnTowards(Mouse.GetState().X, Mouse.GetState().Y);
 
+            if (IsTouching(typeof(Enemy)))
+            {
+                World.RemoveActor(this);
+            }
+
             this.AnimationManager(gameTime);
 
+
         }
+
+
 
         private void Movement(GameTime gameTime)
         {
@@ -90,16 +101,12 @@ namespace EasyStart
 
         private void Atack(GameTime gameTime)
         {
-            if (Mouse.GetState().LeftButton == ButtonState.Pressed && attackCooldown >= 0)
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed && attackCooldown <= 0)
             {
                 this.state = PlayerState.Attacking;
-                attackCooldown =1f;
                 isAttacking = true;
             }
-            else
-            {
-                attackCooldown -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
+            attackCooldown -= (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
         private void AnimationManager(GameTime gameTime)
@@ -107,6 +114,7 @@ namespace EasyStart
             if (this.state == PlayerState.Attacking)
             {
                 this.AttackAnimation(gameTime);
+                attackAnimationTimer = 0;
                 attackAnimationTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else if (this.state == PlayerState.Walking && !isAttacking)
@@ -127,6 +135,8 @@ namespace EasyStart
         }
         private void AttackAnimation(GameTime gameTime)
         {
+            Slash slash = new Slash(this);
+
             if (attackAnimationTimer <= 0.0f)
             {
                 this.ImageName = "0_Golem_Run Slashing_000";
@@ -141,6 +151,9 @@ namespace EasyStart
             {
                 this.ImageName = "0_Golem_Run Slashing_006";
                 Image = GameArt.Get(ImageName);
+                World.Add(slash, "SlashFX", X, Y);
+                slash.Rotation = this.Rotation;
+                slash.Move(15);
             }
             else if (attackAnimationTimer <= 0.6f)
             {
@@ -157,6 +170,7 @@ namespace EasyStart
                 this.ImageName = "0_Golem_Idle_000";
                 Image = GameArt.Get(ImageName);
                 attackAnimationTimer = 0;
+                attackCooldown = 1f;
                 isAttacking = false;
             }
         }
