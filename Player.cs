@@ -118,7 +118,6 @@ namespace EasyStart
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space) && dashCooldownTimer <= 0.0f)
             {
-                Move(dashspeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
                 dashCooldownTimer = dashCooldown;
                 isDashing = true;
                 return;
