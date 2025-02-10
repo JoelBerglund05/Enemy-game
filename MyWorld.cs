@@ -16,7 +16,7 @@ namespace EasyStart
         {
             BackgroundTileName = "FieldsTile_38";
 
-            playButton = new Button();
+            playButton = new StartButton();
             Add(playButton, "play", this.Width / 2, this.Height / 2);
         }
 

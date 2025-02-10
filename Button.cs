@@ -11,25 +11,22 @@ namespace EasyStart
 {
     internal class Button : Actor
     {
-        float buttonSize = 0.2f;
-        public Button()
+        float buttonSize;
+        float buttonBaseSize;
+        public Button(float ScaleSprite = 0.2f)
         {
             this.ScaleSprite = .2f;
+            this.buttonBaseSize = ScaleSprite;
             this.buttonSize = ScaleSprite * 0.5f;
         }
 
         public override void Act()
         {
-            if (IsButtonClicked())
-            {
-                EasyGame.Instance.ActiveWorld = new WorldLevel1();
-            }
-
-            if (IsMouseOverButton() && this.ScaleSprite < 0.2f * 1.08f)
+            if (IsMouseOverButton() && this.ScaleSprite < buttonBaseSize * 1.08f)
             {
                 this.ScaleSprite *= 1.03f;
             }
-            else if (!IsMouseOverButton() && this.ScaleSprite > 0.2f)
+            else if (!IsMouseOverButton() && this.ScaleSprite > buttonBaseSize)
             {
                 this.ScaleSprite *= 0.97f;
             }
@@ -46,7 +43,7 @@ namespace EasyStart
                    buttonPosition.Y + buttonSize.Y > Mouse.GetState().Y;
         }
 
-        private bool IsButtonClicked()
+        protected bool IsButtonClicked()
         {
             return IsMouseOverButton() && Mouse.GetState().LeftButton == ButtonState.Pressed;
         }

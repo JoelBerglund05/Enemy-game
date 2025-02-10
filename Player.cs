@@ -26,19 +26,21 @@ namespace EasyStart
         float attackCooldown;
         float attackCooldownTimer;
 
+        int money;
+
         private bool isAttacking;
 
         private PlayerState state;
 
 
-        public Player() {
+        public Player(float attackCooldown = 0.75f) {
             speed = 100f;
             this.ScaleSprite = .1f;
             this.ScaleRadius = .05f;
             walkingAnimationTimer = 0f;
             idleAnimationTimer = 0f;
             attackAnimationTimer = 0f;
-            attackCooldown = 0.75f;
+            this.attackCooldown = attackCooldown;
             attackCooldownTimer = 0;
 
 
@@ -54,6 +56,11 @@ namespace EasyStart
 
         }
 
+        public float AttackDooldown
+        {
+            get { return attackCooldown; }
+        }
+
         public override void Update(GameTime gameTime)
         {
             this.Movement(gameTime);
@@ -64,6 +71,12 @@ namespace EasyStart
             this.AnimationManager(gameTime);
 
             this.IsKilled();
+        }
+
+        public override int Money
+        {
+            get { return money; }
+            set { money = value; }
         }
 
         private void IsKilled()
@@ -114,6 +127,7 @@ namespace EasyStart
             {
                 this.state = PlayerState.Attacking;
                 isAttacking = true;
+                attackCooldownTimer = attackCooldown + 1.0f;
             }
             attackCooldownTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
@@ -179,7 +193,6 @@ namespace EasyStart
                 this.ImageName = "0_Golem_Idle_000";
                 Image = GameArt.Get(ImageName);
                 attackAnimationTimer = 0;
-                attackCooldownTimer = attackCooldown;
                 isAttacking = false;
             }
         }

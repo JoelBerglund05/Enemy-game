@@ -37,6 +37,8 @@ namespace EasyMonoGame
         /// <summary>
         /// Get the width of the Actor.
         /// </summary>
+        /// 
+        public virtual int Money { get; set; }
         public float Width
         {
             get

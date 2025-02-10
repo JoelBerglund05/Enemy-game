@@ -32,6 +32,7 @@ namespace EasyStart
         {
             if (IsTouching(typeof(PlayerMelee)))
             {
+                player.Money += 1;
                 World.RemoveActor(this);
             }
         }

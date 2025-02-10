@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EasyStart
 {
-    internal class WorldLevel1 : World
+    internal class WorldLevel2 : World
     {
         private Player player;
         private Ghost ghost;
@@ -17,15 +17,15 @@ namespace EasyStart
         float[] nextEnemyTimer = { 4f, 8f };
         float levelTimer = 0;
 
-        int maxTurns = 10;
+        int maxTurns = 20;
         int turn = 0;
 
-        public WorldLevel1() : base(1000, 1000)
+        public WorldLevel2(float attackCooldown) : base(1000, 1000)
         {
             // Tile background with the file "bluerock" in the Content folder.
             BackgroundTileName = "FieldsTile_38";
 
-            player = new Player();
+            player = new Player(attackCooldown);
             Add(player, "0_Golem_Walking_000", this.Width / 2, this.Height / 2);
 
             ghost = new Ghost(player);
@@ -59,12 +59,12 @@ namespace EasyStart
                 Satyr satyr = new Satyr(player);
                 Add(satyr, "Satyr_02_Walking_000", randomX, randomY);
                 turn++;
-                nextEnemyTimer[0] += 10.0f;
+                nextEnemyTimer[0] += 6.0f;
             }
             else if (levelTimer >= nextEnemyTimer[1] && levelTimer <= nextEnemyTimer[0] && maxTurns >= turn)
             {
                 turn++;
-                nextEnemyTimer[1] += 10.0f;
+                nextEnemyTimer[1] += 6.0f;
                 Ghost ghost = new Ghost(player);
                 Add(ghost, "Wraith_01_Moving Forward_000", randomX, randomY);
             }

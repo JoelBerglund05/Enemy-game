@@ -10,6 +10,6 @@ namespace EasyMonoGame
     internal interface IActor
     {
         public Vector2 Position { get; set; }
-        public float Rotation { get; set; }
+        public int Money { get; set; }
     }
 }
