@@ -24,6 +24,7 @@ namespace EasyStart
         float idleAnimationTimer;
         float attackAnimationTimer;
         float attackCooldown;
+        float attackCooldownTimer;
 
         private bool isAttacking;
 
@@ -37,7 +38,10 @@ namespace EasyStart
             walkingAnimationTimer = 0f;
             idleAnimationTimer = 0f;
             attackAnimationTimer = 0f;
-            attackCooldown = 1f;
+            attackCooldown = 0.75f;
+            attackCooldownTimer = 0;
+
+
             isAttacking = false;
             string[] imageNames = { "0_Golem_Walking_000", "0_Golem_Walking_023", "0_Golem_Walking_009", 
                 "0_Golem_Idle_000", "0_Golem_Idle_008", "0_Golem_Idle_017", "0_Golem_Idle Blinking_000",
@@ -106,12 +110,12 @@ namespace EasyStart
 
         private void Atack(GameTime gameTime)
         {
-            if (Mouse.GetState().LeftButton == ButtonState.Pressed && attackCooldown <= 0)
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed && attackCooldownTimer <= 0)
             {
                 this.state = PlayerState.Attacking;
                 isAttacking = true;
             }
-            attackCooldown -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            attackCooldownTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
         private void AnimationManager(GameTime gameTime)
@@ -175,7 +179,7 @@ namespace EasyStart
                 this.ImageName = "0_Golem_Idle_000";
                 Image = GameArt.Get(ImageName);
                 attackAnimationTimer = 0;
-                attackCooldown = 1f;
+                attackCooldownTimer = attackCooldown;
                 isAttacking = false;
             }
         }
