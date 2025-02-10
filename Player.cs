@@ -19,15 +19,20 @@ namespace EasyStart
     }
     internal class Player : Actor
     {
-        float speed;
-        float walkingAnimationTimer;
-        float idleAnimationTimer;
-        float attackAnimationTimer;
-        float attackCooldown;
-        float attackCooldownTimer;
+        private float speed;
+        private float dashspeed;
+        private float dashCooldown;
+        private float dashCooldownTimer;
+        private float dashTime;
+        private float walkingAnimationTimer;
+        private float idleAnimationTimer;
+        private float attackAnimationTimer;
+        private float attackCooldown;
+        private float attackCooldownTimer;
 
-        int money;
+        private int money;
 
+        private bool isDashing;
         private bool isAttacking;
 
         private PlayerState state;
@@ -35,6 +40,11 @@ namespace EasyStart
 
         public Player(float attackCooldown = 0.75f) {
             speed = 100f;
+            dashspeed = speed * 2;
+            dashCooldown = 5f;
+            dashCooldownTimer = 0;
+            dashTime = 0.2f;
+            isDashing = false;
             this.ScaleSprite = .1f;
             this.ScaleRadius = .05f;
             walkingAnimationTimer = 0f;
@@ -59,6 +69,18 @@ namespace EasyStart
         public float AttackDooldown
         {
             get { return attackCooldown; }
+        }
+
+        public float DashCooldownTimer
+        {
+            get 
+            {
+                if (dashCooldownTimer < 0)
+                {
+                    return 0;
+                }
+                return dashCooldownTimer; 
+            }
         }
 
         public override void Update(GameTime gameTime)
@@ -93,6 +115,26 @@ namespace EasyStart
 
         private void Movement(GameTime gameTime)
         {
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Space) && dashCooldownTimer <= 0.0f)
+            {
+                Move(dashspeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
+                dashCooldownTimer = dashCooldown;
+                isDashing = true;
+                return;
+            }
+            else if (isDashing)
+            {
+                dashTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (dashTime <= 0)
+                {
+                    isDashing = false;
+                    dashTime = 0.5f;
+                }
+                Move(dashspeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
+                return;
+            }
+
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
                 this.Y -= (float)Math.Sqrt(speed * gameTime.ElapsedGameTime.TotalSeconds);
@@ -119,6 +161,8 @@ namespace EasyStart
             {
                 this.state = PlayerState.Idle;
             }
+
+            dashCooldownTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
         private void Atack(GameTime gameTime)

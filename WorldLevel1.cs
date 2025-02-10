@@ -75,6 +75,8 @@ namespace EasyStart
                 EasyGame.Instance.ActiveWorld = nextLevel;
             }
 
+            ShowText("Dash cooldown: " + player.DashCooldownTimer.ToString("0"), this.Width / 5, (int)(this.Height / 1.1f));
+
             levelTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
 
