@@ -10,13 +10,15 @@ namespace EasyMonoGame
         private string text;
         private Vector2 position;
         private Color color;
+        private float size;
 
-        internal Text(SpriteFont font, string text, Vector2 position, Color color)
+        internal Text(SpriteFont font, string text, Vector2 position, Color color, float size = 1f)
         {
             this.font = font;
             this.text = text;
             this.position = position;
             this.color = color;
+            this.size = size;
         }
 
         internal void Draw(SpriteBatch spriteBatch)
@@ -29,7 +31,7 @@ namespace EasyMonoGame
                 Color.White,
                 0,
                 center,
-                1f, // scale
+                1f * size, // scale
                 SpriteEffects.None,
                 0.5f);
         }

@@ -192,7 +192,7 @@ namespace EasyMonoGame
         /// <param name="y"></param>
 
 
-        public void ShowText(string text, int x, int y)
+        public void ShowText(string text, int x, int y, float size = 1f)
         {
             if (GameArt.GetFont() != null)
             { 
@@ -200,7 +200,8 @@ namespace EasyMonoGame
                     GameArt.GetFont(),
                     text,
                     new Vector2(x, y),
-                    Color.White);
+                    Color.White,
+                    size);
                 texts[new Vector2(x, y)] = textObject;
             }
         }
